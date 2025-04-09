@@ -1,34 +1,89 @@
 import quizLogo from './assets/quiz-logo.png'
 import styled from 'styled-components'
-
+import { LoadingBar } from './loadingBar'
 const MainBody = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
   margin: 10px auto;
-  max-width:80vw;
+  max-width: 60vw;
   height: 70vh;
   justify-content: start;
   align-items: center;
   font-family: "Rubik", sans-serif;
+
+  button {
+    display: flex;
+  }
 `
 
 const Title = styled.h1`
-  font-size: 2.1rem;
+  font-size: 2rem;
   background: linear-gradient(30deg, #e781fb 40%, #8e76fa 60%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 0.5rem;
+  letter-spacing: 0.8rem;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
+`
+const QuizBody = styled.div`
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(123, 31, 162, 0.5);
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgb(236, 223, 223);
+  font-size: 1.3rem;
+  font-weight: 200;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: #3B0A6C;
+  border-radius: 0.4rem;
+  letter-spacing: 0.1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(123, 31, 162, 0.6);
+  }
+
+  button {
+    cursor: pointer;
+    display: block;
+    color: #504a4a;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: 1rem 15rem;
+    border-radius: 3rem;
+    background-color: skyblue;
+    text-align: center;
+    letter-spacing: 0.0rem;
+
+  }
+
+  button:hover{
+    background-color: #ce1842;
+    transition: all 0.3s ease;
+    color: black;
+  }
 `
 
 function App() {
   return (
     <MainBody>
-      <img src={quizLogo} className="Quiz Logo w-12 h-12" />
+      <img src={quizLogo} className="Quiz Logo w-15 h-15" />
       <Title>Reactquiz</Title>
+      <QuizBody>
+        <LoadingBar className='w-full'></LoadingBar>
+        <h1>WHich approcah not to be used to render content condiiontly?</h1>
+        <button>using an if statement</button>
+        <button>using an if statement</button>
+        <button>using an if statement</button>
+        <button>using an if statement</button>
+      </QuizBody>
     </MainBody>
   );
 }
