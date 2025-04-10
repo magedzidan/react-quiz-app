@@ -1,6 +1,8 @@
 import quizLogo from './assets/quiz-logo.png'
 import styled from 'styled-components'
 import { LoadingBar } from './loadingBar'
+import { useEffect, useState } from 'react'
+import { questions } from './data'
 const MainBody = styled.main`
   display: flex;
   flex-direction: column;
@@ -65,6 +67,12 @@ const QuizBody = styled.div`
   }
 
   button:hover{
+    background-color: #a92241;
+    transition: all 0.3s ease;
+    color: black;
+  }
+
+  button:focus{
     background-color: #ce1842;
     transition: all 0.3s ease;
     color: black;
@@ -72,20 +80,41 @@ const QuizBody = styled.div`
 `
 
 function App() {
-  return (
-    <MainBody>
-      <img src={quizLogo} className="Quiz Logo w-15 h-15" />
-      <Title>Reactquiz</Title>
-      <QuizBody>
-        <LoadingBar className='w-full'></LoadingBar>
-        <h1>WHich approcah not to be used to render content condiiontly?</h1>
-        <button>using an if statement</button>
-        <button>using an if statement</button>
-        <button>using an if statement</button>
-        <button>using an if statement</button>
-      </QuizBody>
-    </MainBody>
-  );
-}
+    const [counter, setCounter] = useState(0); //dah el mfrod yzed b3d el timer
+    const [currentQuestion, setCurrentQuestion] = useState(questions[counter]);
+    const [answers,setAnswers]=useState([]);
+    
+
+    function HandleTimer(filled) {
+        if (filled) {
+            setCounter(prev => {
+                const newCounter = prev + 1;
+                setCurrentQuestion(questions[newCounter]);
+                console.log(answers);
+                return newCounter;
+            });
+            setAnswers((prev) => [...prev, 1]);
+            console.log(questions.length===answers.length);
+        }
+    }
+
+
+
+    return (
+        questions.length !== answers.length ? (
+            <MainBody>
+                <img src={quizLogo} className="Quiz Logo w-15 h-15" />
+                <Title>Reactquiz</Title>
+                <QuizBody>
+                    <LoadingBar HandleTimer={HandleTimer} answered={questions.length === answers.length} className='flex justify-center'></LoadingBar>
+                    <h1>{currentQuestion.question}</h1>
+                    {currentQuestion.answers.map((answer, index) => (
+                        <button key={index}>{answer.text}</button>
+                    ))}
+                </QuizBody>
+            </MainBody>
+        ) : <MainBody>you on the score page</MainBody>
+    );
+  }
 
 export default App;

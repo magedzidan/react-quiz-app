@@ -1,20 +1,32 @@
-import { useState,useEffect } from "react";
-export function LoadingBar(){
-    const [filled,setFilled]=useState(0);
-    const [isLoading,setIsLoading]=useState(true);
+import { useState, useEffect } from "react";
 
-    useEffect(()=>{
-        if(filled<100 && isLoading ){
-            setTimeout(()=>setFilled(prev=>prev+=5),500);
+export function LoadingBar({ HandleTimer, answered }) {
+    const [filled, setFilled] = useState(0);
+    const [Answered, setAnswered] = useState(answered);
+
+    useEffect(() => {
+        let timeoutId;
+        if (filled < 100 && !answered) {
+            timeoutId = setTimeout(() => setFilled(prev => prev + 5), 100);
         }
-    },[filled,isLoading])
+        else if (filled === 100 && !answered) {
+            HandleTimer(true);
+            setFilled(0);
+        }
 
-    return(
-        <div style={{width: "100%"}}>
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [filled, Answered, answered, HandleTimer]);
+
+    return (
+        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
             <div style={{
-                width: "100%", 
-                height: "20px", 
-                backgroundColor: "#e0e0e0", 
+                width: "80%",
+                height: "10px",
+                backgroundColor: "#e0e0e0",
                 borderRadius: "1rem",
                 overflow: "hidden"
             }}>
@@ -26,7 +38,6 @@ export function LoadingBar(){
                     borderRadius: "1rem"
                 }}></div>
             </div>
-
         </div>
-    )
+    );
 }
