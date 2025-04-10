@@ -90,6 +90,8 @@ function App() {
           SetSpeedUp(false);
             if (answers.length < counter + 1) {
                 HandleAnswer({ text: 'No answer selected', isCorrect: false });
+                SetSpeedUp(false);
+
             }
             
             setCounter(prev => {
