@@ -80,41 +80,66 @@ const QuizBody = styled.div`
 `
 
 function App() {
-    const [counter, setCounter] = useState(0); //dah el mfrod yzed b3d el timer
+    const [counter, setCounter] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState(questions[counter]);
-    const [answers,setAnswers]=useState([]);
-    
-
+    const [answers, setAnswers] = useState([]);
+    const [score, setScore] = useState(0);
+    const [speedUp,SetSpeedUp]=useState(false); 
     function HandleTimer(filled) {
         if (filled) {
+          SetSpeedUp(false);
+            if (answers.length < counter + 1) {
+                HandleAnswer({ text: 'No answer selected', isCorrect: false });
+            }
+            
             setCounter(prev => {
                 const newCounter = prev + 1;
                 setCurrentQuestion(questions[newCounter]);
-                console.log(answers);
                 return newCounter;
             });
-            setAnswers((prev) => [...prev, 1]);
-            console.log(questions.length===answers.length);
         }
     }
 
+    function HandleAnswer(answer=' ') {
+      setAnswers((prev) => [...prev, answer]);
+      SetSpeedUp(true);
 
-
+        if (answer.isCorrect) {
+            setScore(prev => prev + 1);
+        }
+        
+    }
+    console.log(answers,answers.length)
     return (
         questions.length !== answers.length ? (
             <MainBody>
                 <img src={quizLogo} className="Quiz Logo w-15 h-15" />
                 <Title>Reactquiz</Title>
                 <QuizBody>
-                    <LoadingBar HandleTimer={HandleTimer} answered={questions.length === answers.length} className='flex justify-center'></LoadingBar>
+                    <LoadingBar HandleTimer={HandleTimer} answered={questions.length === answers.length} className='flex justify-center' speed={speedUp}></LoadingBar>
                     <h1>{currentQuestion.question}</h1>
                     {currentQuestion.answers.map((answer, index) => (
-                        <button key={index}>{answer.text}</button>
+                        <button onClick={() => HandleAnswer(answer)} key={index}>{answer.text}</button>
                     ))}
                 </QuizBody>
             </MainBody>
-        ) : <MainBody>you on the score page</MainBody>
+        ) : (
+            <MainBody>
+                <Title>Quiz Complete!</Title>
+                <QuizBody>
+                    <h2>Your Score: {score} out of {questions.length}</h2>
+                    {answers.map((answer, index) => (
+                        <div key={index}>
+                            {answer.isCorrect ? 
+                                <h3 className="text-green-700">{answer.text}</h3> : 
+                                <h3 className="text-red-700">{answer.text}</h3>
+                            }
+                        </div>
+                    ))}
+                </QuizBody>
+            </MainBody>
+        )
     );
-  }
+}
 
 export default App;

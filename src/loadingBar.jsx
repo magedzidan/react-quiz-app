@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-export function LoadingBar({ HandleTimer, answered }) {
+export function LoadingBar({ HandleTimer, answered,speed }) {
     const [filled, setFilled] = useState(0);
     const [Answered, setAnswered] = useState(answered);
 
     useEffect(() => {
         let timeoutId;
         if (filled < 100 && !answered) {
-            timeoutId = setTimeout(() => setFilled(prev => prev + 5), 100);
+            timeoutId = setTimeout(() => setFilled(prev => prev + 5),speed?60: 300);
         }
         else if (filled === 100 && !answered) {
             HandleTimer(true);
