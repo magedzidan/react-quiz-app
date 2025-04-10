@@ -4,7 +4,6 @@ This is an **interactive quiz application** built with **React** that challenges
 
 ---
 ![reactQuiz](https://github.com/user-attachments/assets/23ae7a1d-dab9-4fe8-9f60-589dc787059a)
-![scire](https://github.com/user-attachments/assets/1d434a55-ef60-4ec8-ac78-b7448808a175)
 
 ## Key Features
 
@@ -28,6 +27,7 @@ This is an **interactive quiz application** built with **React** that challenges
 - Provides a complete overview of performance and areas of improvement.
 
 ---
+![scire](https://github.com/user-attachments/assets/1d434a55-ef60-4ec8-ac78-b7448808a175)
 
 ## Technical Implementation
 
