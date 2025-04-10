@@ -9,7 +9,7 @@ const MainBody = styled.main`
   gap: 1rem;
   margin: 10px auto;
   max-width: 60vw;
-  height: 70vh;
+  height: 80vh;
   justify-content: start;
   align-items: center;
   font-family: "Rubik", sans-serif;
@@ -31,7 +31,7 @@ const Title = styled.h1`
 `
 const QuizBody = styled.div`
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(123, 31, 162, 0.5);
-  padding: 3.5rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -88,6 +88,7 @@ function App() {
     function HandleTimer(filled) {
         if (filled) {
           SetSpeedUp(false);
+
             if (answers.length < counter + 1) {
                 HandleAnswer({ text: 'No answer selected', isCorrect: false });
                 SetSpeedUp(false);
@@ -105,7 +106,6 @@ function App() {
     function HandleAnswer(answer=' ') {
       setAnswers((prev) => [...prev, answer]);
       SetSpeedUp(true);
-
         if (answer.isCorrect) {
             setScore(prev => prev + 1);
         }
@@ -121,17 +121,18 @@ function App() {
                     <LoadingBar HandleTimer={HandleTimer} answered={questions.length === answers.length} className='flex justify-center' speed={speedUp}></LoadingBar>
                     <h1>{currentQuestion.question}</h1>
                     {currentQuestion.answers.map((answer, index) => (
-                        <button onClick={() => HandleAnswer(answer)} key={index}>{answer.text}</button>
+                        <button disabled={answers.length > counter} onClick={() => HandleAnswer(answer)} key={index}>{answer.text}</button>
                     ))}
                 </QuizBody>
             </MainBody>
         ) : (
             <MainBody>
                 <Title>Quiz Complete!</Title>
-                <QuizBody>
+                <QuizBody className='pt-0'>
                     <h2>Your Score: {score} out of {questions.length}</h2>
                     {answers.map((answer, index) => (
                         <div key={index}>
+                            <h1>{questions[index].question}</h1>
                             {answer.isCorrect ? 
                                 <h3 className="text-green-700">{answer.text}</h3> : 
                                 <h3 className="text-red-700">{answer.text}</h3>
