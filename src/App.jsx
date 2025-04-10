@@ -67,7 +67,7 @@ const QuizBody = styled.div`
   }
 
   button:hover{
-    background-color: #a92241;
+    background-color: #ce1842;
     transition: all 0.3s ease;
     color: black;
   }
@@ -121,7 +121,18 @@ function App() {
                     <LoadingBar HandleTimer={HandleTimer} answered={questions.length === answers.length} className='flex justify-center' speed={speedUp}></LoadingBar>
                     <h1>{currentQuestion.question}</h1>
                     {currentQuestion.answers.map((answer, index) => (
-                        <button disabled={answers.length > counter} onClick={() => HandleAnswer(answer)} key={index}>{answer.text}</button>
+                        <button 
+                            disabled={answers.length > counter} 
+                            onClick={() => HandleAnswer(answer)} 
+                            key={index}
+                            tabIndex={0}
+                            style={{
+                                opacity: answers.length > counter ? 0.5 : 1,
+                                cursor: answers.length > counter ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            {answer.text}
+                        </button>
                     ))}
                 </QuizBody>
             </MainBody>
